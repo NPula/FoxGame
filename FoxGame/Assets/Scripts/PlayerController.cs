@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     [SerializeField] private float m_speed = 5f;
 
     private Rigidbody2D m_playerRb;
@@ -15,13 +14,9 @@ public class PlayerController : MonoBehaviour
         m_playerRb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-        //m_velocity *= m_speed * Time.deltaTime;
-    }
-
     private void FixedUpdate()
     {
+        // Player movement
         m_velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         m_playerRb.MovePosition((Vector2)transform.position + m_velocity.normalized * m_speed * Time.deltaTime);
     }
