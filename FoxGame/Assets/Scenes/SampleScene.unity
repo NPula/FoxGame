@@ -123,6 +123,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &446713443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 446713445}
+  - component: {fileID: 446713444}
+  m_Layer: 0
+  m_Name: Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &446713444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446713443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036f2abca826ce543b5156ce4a975c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GridWidth: 2
+  m_GridHeight: 2
+  m_GridTileOffset: 0.5
+  m_gridSprite: {fileID: 7482667652216324306, guid: 76ac68146da83ac46879172553d1f35b, type: 3}
+--- !u!4 &446713445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446713443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.421999, y: 0.09444267, z: -0.58953106}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,6 +308,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7435228926673472411, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
 --- !u!1001 &1097731976
@@ -317,6 +368,10 @@ PrefabInstance:
     - target: {fileID: 7435228926673472411, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
       propertyPath: m_Name
       value: Food (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7435228926673472411, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
@@ -399,6 +454,10 @@ PrefabInstance:
     - target: {fileID: 3436039231348996864, guid: 9113dcd29016864478ef9fb6a370f3ed, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3436039231348996864, guid: 9113dcd29016864478ef9fb6a370f3ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3436039231348996864, guid: 9113dcd29016864478ef9fb6a370f3ed, type: 3}
       propertyPath: m_TagString
@@ -508,6 +567,10 @@ PrefabInstance:
     - target: {fileID: 7435228926673472411, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
       propertyPath: m_Name
       value: Food
+      objectReference: {fileID: 0}
+    - target: {fileID: 7435228926673472411, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16be101f2ef6a41449f62e4fb265372d, type: 3}
