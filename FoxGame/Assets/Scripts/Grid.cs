@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class GridPiece
 {
     //public float width = 0;
@@ -22,14 +23,16 @@ public class Grid
     public int GridWidth { get; set; }
     public int GridHeight { get; set; }
 
-    private float cellSize = .5f;
+    private float cellSize = 1f;
     public float CellSize { 
         get { return cellSize; } 
-        set { 
-            if (value != 0) 
-            { 
-                cellSize = value; 
-            } 
+        set {
+            if (value > 0)
+            {
+                cellSize = value;
+            }
+            else
+                cellSize = 1;
         } 
     }
 
@@ -44,3 +47,5 @@ public class Grid
         grid = new GridPiece[GridWidth, GridHeight];
     }
 }
+
+*/
