@@ -152,10 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036f2abca826ce543b5156ce4a975c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AmountOfCols: 3
-  m_AmountOfRows: 3
-  m_CellSize: 1
-  m_GridTileOffset: 1
+  m_AmountOfCols: 5
+  m_AmountOfRows: 5
+  m_CellSize: 1.5
   m_gridSprite: {fileID: 7482667652216324306, guid: 76ac68146da83ac46879172553d1f35b, type: 3}
 --- !u!4 &446713445
 Transform:
