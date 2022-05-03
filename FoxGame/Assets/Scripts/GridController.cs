@@ -32,10 +32,15 @@ public class GridController : MonoBehaviour
     // Store the grid. 
     private GridPiece[,] m_grid;
 
+    private List<GridPiece> m_enabledGrid;
+
     private GridPiece m_ActivePiece = null; // Current active grid cell (the mouse is over it.)
 
     private void Start()
     {
+        // Store enabled grid pieces for easy access.
+        m_enabledGrid = new List<GridPiece>();
+
         // Get the size of the grid. This needs to come before the Initialize function
         m_GridWidth = m_AmountOfCols * m_CellSize;
         m_GridHeight = m_AmountOfRows * m_CellSize;
@@ -44,7 +49,7 @@ public class GridController : MonoBehaviour
         m_grid = new GridPiece[m_AmountOfRows, m_AmountOfCols];
         
         InitializeGridCells();
-        DisplayGrid();
+        //DisplayGrid();
     }
 
     private void Update()
@@ -86,7 +91,9 @@ public class GridController : MonoBehaviour
                 cellPiece.cellObject.transform.position = new Vector2(i * m_CellSize - ((m_GridWidth - m_CellSize) / 2), j * m_CellSize - ((m_GridHeight - m_CellSize) / 2));
                 
                 // Create sprite at position so we can see the grid.
-                cellPiece.cellObject.AddComponent<SpriteRenderer>().sprite = m_gridSprite;
+                SpriteRenderer sprite = cellPiece.cellObject.AddComponent<SpriteRenderer>();
+                sprite.sprite = m_gridSprite;
+                //sprite.color = new Color32(0xBE, 0xBF, 0xBE, 0xFF); // grey color
 
                 // Set objects parent to the GameObject the script is attached to for organization in the editor.
                 cellPiece.cellObject.transform.SetParent(this.transform);
@@ -114,7 +121,132 @@ public class GridController : MonoBehaviour
         }
     }
 
-    bool IsInGrid(Vector2 position, Vector2 size)
+    public void EnableGridInRange(Vector2 start, Vector2 end)
+    {
+        Vector2 gridStart = WorldPositionToGrid(start);
+        Vector2 gridEnd = WorldPositionToGrid(end);
+
+        // If something goes wrong return;
+        if (gridStart.x < 0 || gridEnd.x < 0)
+        {
+            return;
+        }
+
+        for (int i = (int)gridStart.x; i < gridEnd.x; i++)
+        {
+            for (int j = (int)gridStart.y; j < gridEnd.y; j++)
+            {
+                if (m_grid[i, j].isActive)
+                {
+                    m_grid[i, j].cellObject.SetActive(true);
+                    m_enabledGrid.Add(m_grid[i, j]);
+
+                    if (m_grid[i, j].isUsed)
+                    {
+                        m_grid[i, j].cellObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    }
+                    else
+                    {
+                        m_grid[i, j].cellObject.GetComponent<SpriteRenderer>().color = Color.white;
+                    }
+                }
+
+                /* TODO - fix resizing.
+                if (i == (int)gridStart.x)
+                {
+                    ResizeGridAt(i, j);
+                }
+                if (i == gridEnd.x-1)
+                {
+                    ResizeGridAt(i, j);
+                }
+                if (j == (int)gridStart.y)
+                {
+                    ResizeGridAt(i, j);
+                }
+                if (i == gridEnd.y - 1)
+                {
+                    ResizeGridAt(i, j);
+                }
+                */
+            }
+        }
+    }
+
+    public void SetUsedInRange(Vector2 start, Vector2 end)
+    {
+        Vector2 gridStart = WorldPositionToGrid(start);
+        Vector2 gridEnd = WorldPositionToGrid(end);
+
+        // If something goes wrong return;
+        if (gridStart.x < 0 || gridEnd.x < 0)
+        {
+            return;
+        }
+
+        for (int i = (int)gridStart.x; i < gridEnd.x; i++)
+        {
+            for (int j = (int)gridStart.y; j < gridEnd.y; j++)
+            {
+                if (m_grid[i, j].isActive)
+                {
+                    m_grid[i, j].isUsed = true;
+                }
+            }
+        }
+    }
+
+    public bool CanPlaceObjectHere(Vector2 start, Vector2 end)
+    {
+        Vector2 gridStart = WorldPositionToGrid(start);
+        Vector2 gridEnd = WorldPositionToGrid(end);
+
+        for (int i = (int)gridStart.x; i < gridEnd.x; i++)
+        {
+            for (int j = (int)gridStart.y; j < gridEnd.y; j++)
+            {
+                if (m_grid[i,j].isUsed)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public void ResizeGridAt(int x, int y)
+    {
+        if (m_grid[x, y].cellObject.transform.localScale == m_gridSprite.bounds.size)
+        {
+            m_grid[x, y].cellObject.transform.localScale *= .5f;
+        }
+
+        //for (int i = (int)start.x; i < end.x; i++)
+        //{
+        //    m_grid[x, y].cellObject.transform.localScale *= .5f;
+        //}
+    }
+
+    public void ResetSize()
+    {
+        //m_enabledGrid[i].cellObject.transform.localScale = m_gridSprite.bounds.size;
+    }
+
+
+
+    public void DisableGrid()
+    {
+        for (int i = 0; i < m_enabledGrid.Count; i++)
+        {
+            // reset the size of the grid sprite.
+            m_enabledGrid[i].cellObject.transform.localScale = m_gridSprite.bounds.size;
+            m_enabledGrid[i].cellObject.SetActive(false);
+            m_enabledGrid.RemoveAt(i);
+        }
+    }
+
+    public bool IsInGrid(Vector2 position, Vector2 size)
     {
         // Grid Bounds
         float gridLeft = -(m_GridWidth / 2);
@@ -157,7 +289,21 @@ public class GridController : MonoBehaviour
         }
     }
 
-    GridPiece GetGridCellAt(Vector2 cellPos)
+    public Vector2 WorldPositionToGrid(Vector2 position)
+    {
+        Vector2 gridPosition = new Vector2((int)((position.x + (m_GridWidth / 2)) / m_CellSize), (int)((position.y + (m_GridHeight / 2)) / m_CellSize));
+       
+        // If something goes wrong return a negative value that we can check for; 
+        // Maybe change this to return something else later.
+        if (gridPosition.x < 0 || gridPosition.y < 0 || gridPosition.x >= m_AmountOfCols || gridPosition.y >= m_AmountOfRows)
+        {
+            return new Vector2(-1, -1);
+        }
+
+        return gridPosition;
+    }
+
+    public GridPiece GetGridCellAt(Vector2 cellPos)
     {
         int indX = (int)((cellPos.x + (m_GridWidth / 2)) / m_CellSize);
         int indY = (int)((cellPos.y + (m_GridHeight / 2)) / m_CellSize);
