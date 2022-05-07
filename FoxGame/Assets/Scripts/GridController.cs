@@ -63,14 +63,14 @@ public class GridController : MonoBehaviour
             //Debug.Log("MousePos: " + mousePos);
 
             // changes color of cell.
-            HighlightCell(mousePos);
+            //HighlightCell(mousePos);
         }
         else
         {
             // Make sure no cells are highlighted if were not in the grid.
             if (m_ActivePiece != null)
             {
-                m_ActivePiece.cellObject.GetComponent<SpriteRenderer>().color = Color.white;
+                //m_ActivePiece.cellObject.GetComponent<SpriteRenderer>().color = Color.white;
             }
         }
     }
@@ -93,6 +93,7 @@ public class GridController : MonoBehaviour
                 // Create sprite at position so we can see the grid.
                 SpriteRenderer sprite = cellPiece.cellObject.AddComponent<SpriteRenderer>();
                 sprite.sprite = m_gridSprite;
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 10.0f);
                 //sprite.color = new Color32(0xBE, 0xBF, 0xBE, 0xFF); // grey color
 
                 // Set objects parent to the GameObject the script is attached to for organization in the editor.
@@ -143,11 +144,11 @@ public class GridController : MonoBehaviour
 
                     if (m_grid[i, j].isUsed)
                     {
-                        m_grid[i, j].cellObject.GetComponent<SpriteRenderer>().color = Color.red;
+                        m_grid[i, j].cellObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 0.0f, 0.0f, .3f);
                     }
                     else
                     {
-                        m_grid[i, j].cellObject.GetComponent<SpriteRenderer>().color = Color.white;
+                        m_grid[i, j].cellObject.GetComponent<SpriteRenderer>().color = new Color(255.0f, 255.0f, 255.0f, .3f);
                     }
                 }
 

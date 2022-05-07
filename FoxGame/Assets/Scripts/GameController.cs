@@ -25,11 +25,18 @@ public class GameController : MonoBehaviour
         {
             choiceIndex = (choiceIndex + 1) % buildingPrefabs.Length;
             Debug.Log("Build: " + buildingPrefabs[choiceIndex].name);
+
+            if (objInHand != null)
+            {
+                Destroy(objInHand);
+                objInHand = Instantiate(buildingPrefabs[choiceIndex], transform.position, Quaternion.identity);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.E) && !objInHand)
         {
             objInHand = Instantiate(buildingPrefabs[choiceIndex], transform.position, Quaternion.identity);
+            //objInHand = null;
         }
 
         if (Input.GetMouseButtonDown(0))
